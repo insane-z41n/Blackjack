@@ -80,8 +80,9 @@ public class Board extends JFrame{
 		standButton.setFocusPainted(false);
 		buttonPanel.add(standButton);
 		
-		re
-		
+//		newButton = new JButton("New Game");
+//		newButton.setFocusPainted(false);
+//		newButton.setVisible(false);
 		
 		setVisible(true);
 		pack();

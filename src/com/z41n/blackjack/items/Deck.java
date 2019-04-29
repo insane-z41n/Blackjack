@@ -40,9 +40,8 @@ public class Deck {
 		cardTypes[3] = "Diamonds";
 	}
 	
-	//1,2,3,4,.......90..150;
 	
-	//Shuffle kthe order of the deck.
+	//Shuffle the order of the deck.
 	public void shuffle() {
 		LinkedList<Card> deck = new LinkedList<Card>();
 		for(int i = 0; i < cardTypes.length; i++) { 
