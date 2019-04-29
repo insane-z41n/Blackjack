@@ -11,6 +11,7 @@ public class PlayerHand implements Hand{
 	private LinkedList<Card> cards;
 	public String playerName;
 	
+	//Player name or user name.
 	public PlayerHand(String playerName) {
 		this.playerName = playerName;
 	}
