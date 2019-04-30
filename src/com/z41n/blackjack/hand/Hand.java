@@ -11,11 +11,13 @@ public class Hand {
 	private LinkedList<Card> cards = new LinkedList<Card>();
 	
 	
+	//Add card to hand (Specifically the cards LinkedList).
 	public void addToHand(Card newCard) {
 		cards.add(newCard);
 		numCards++;
 	}
 	
+	//Remove all cards from linked list.
 	public void removeHand() {
 		while(numCards != 0) {
 			cards.remove();
@@ -23,6 +25,7 @@ public class Hand {
 		}
 	}
 	
+	//Get total value of cards in hand.
 	public int getTotal() {
 		
 		if(cards == null || cards.size() < 0) {
