@@ -4,7 +4,7 @@ public class DealerHand extends Hand {
 	
 	private int maxAmount;
 	
-	//The dealers max amount they do not hit on unless the are losing.
+	//The dealers max amount they do not hit on unless they are losing.
 	public DealerHand(int maxAmount) {
 		this.maxAmount = maxAmount;
 	}

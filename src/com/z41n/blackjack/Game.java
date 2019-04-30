@@ -15,10 +15,10 @@ public class Game {
 		Card card = deck.pickUp();
 		System.out.println(card.value + " of " + card.type);
 		
-		PlayerHand player1 = new PlayerHand("Zain Momin");
+		PlayerHand player1 = new PlayerHand("Player 1");
 		player1.addToHand(card);
 		System.out.println(player1.getTotal());
-		
+		System.out.println(player1.getPlayerName());
 		
 		//Initialize display board
 		Board newBoard = new Board(500, 500);
