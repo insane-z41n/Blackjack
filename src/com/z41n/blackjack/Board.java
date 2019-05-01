@@ -1,6 +1,7 @@
 package com.z41n.blackjack;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -12,15 +13,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.z41n.blackjack.controller.BoardController;
 import com.z41n.blackjack.items.Deck.Card;
 
 public class Board extends JFrame{
 	
-	private int width;
-	private int height;
+	private int width, height;
+	private int dealerIndex = 0, playerIndex = 0;
 	
-	private JPanel dealerCardsPanel;
-	private JPanel playerCardsPanel;
+	private JPanel dealerCardsPanel, playerCardsPanel;
 	
 	public JButton dealButton, hitButton, standButton;
 	
@@ -84,9 +85,57 @@ public class Board extends JFrame{
 //		newButton.setFocusPainted(false);
 //		newButton.setVisible(false);
 		
+		new BoardController(this);
+		
+		
 		setVisible(true);
 		pack();
 		setLocationRelativeTo(null);
+	}
+	
+	public void addToPlayerHand(Card newCard) {
+		JLabel card = createCardLabel(newCard);
+		playerCards.add(card);
+		
+		playerCardsPanel.add(playerCards.get(playerIndex));
+		
+		playerIndex++;
+		
+		playerCardsPanel.revalidate();
+		playerCardsPanel.repaint();
+		
+	}
+	
+	//Display cards from deallers hand.
+	public void addToDealerHand(Card newCard) {
+		JLabel card = createCardLabel(newCard);
+		dealerCards.add(card);
+		
+		if(dealerCards.size() == 1) {
+			JLabel blankLabel = new JLabel("FLIPPED");
+			createCardLabel(blankLabel);
+			dealerCardsPanel.add(blankLabel);
+		} else {
+			dealerCardsPanel.add(dealerCards.get(dealerIndex));
+		}
+	
+		dealerIndex++;
+		
+		dealerCardsPanel.revalidate();
+		dealerCardsPanel.repaint();
+	}
+	
+	//Create Card Label with Card as paramater.
+	private JLabel createCardLabel(Card newCard) {
+		//System.out.println(newCard.value + " of " + newCard.type);
+		JLabel card = new JLabel(newCard.value + " of " + newCard.type);
+		createCardLabel(card);
+		return card;
+	}
+	
+	//Create Card Label 
+	private void createCardLabel(JLabel lbl) {
+		lbl.setForeground(Color.RED);
 	}
 	
 	

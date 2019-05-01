@@ -6,8 +6,8 @@ import com.z41n.blackjack.items.Deck.Card;
 
 public class Hand {
 	
-	private int numCards;
-	private int total;
+	private int numCards = 0;
+	private int total = 0;
 	private LinkedList<Card> cards = new LinkedList<Card>();
 	
 	
@@ -51,6 +51,10 @@ public class Hand {
 		}
 		
 		return total;
+	}
+	
+	public int getNumCards() {
+		return numCards;
 	}
 	
 }
