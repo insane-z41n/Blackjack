@@ -7,7 +7,6 @@ import com.z41n.blackjack.items.Deck.Card;
 public class Hand {
 	
 	private int numCards = 0;
-	private int total = 0;
 	private LinkedList<Card> cards = new LinkedList<Card>();
 	
 	
@@ -31,6 +30,8 @@ public class Hand {
 		if(cards == null || cards.size() < 0) {
 			return -1;
 		}
+		
+		int total = 0;
 		
 		for(int i = 0; i < cards.size(); i++) {
 			Card currentCard = cards.get(i);

@@ -93,7 +93,8 @@ public class Board extends JFrame{
 		setLocationRelativeTo(null);
 	}
 	
-	public void addToPlayerHand(Card newCard) {
+	//Display cards from player hand.
+	public void displayPlayerHand(Card newCard) {
 		JLabel card = createCardLabel(newCard);
 		playerCards.add(card);
 		
@@ -106,8 +107,8 @@ public class Board extends JFrame{
 		
 	}
 	
-	//Display cards from deallers hand.
-	public void addToDealerHand(Card newCard) {
+	//Display cards from dealers hand.
+	public void displayDealerHand(Card newCard) {
 		JLabel card = createCardLabel(newCard);
 		dealerCards.add(card);
 		

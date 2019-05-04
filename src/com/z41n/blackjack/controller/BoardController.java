@@ -40,7 +40,25 @@ public class BoardController {
 		//board.standButton.addActionListener(a -> stand());
 	}
 	
+	//Add card to player hand and check if they have not exceeded 21.
 	private void hitPlayerHand() {
+		
+		boolean bust = false;
+		
+		Card newCard = deck.pickUp();
+		player.addToHand(newCard);
+		board.displayPlayerHand(newCard);
+		
+		if(player.getTotal() > 21) {
+			bust = true;
+		}
+		
+		if(bust) {
+			System.out.println("You lose: " + player.getTotal());
+			
+		} else {
+			System.out.println("Your total: " + player.getTotal());
+		}
 		
 	}
 	
@@ -55,10 +73,9 @@ public class BoardController {
 			Card card2 = deck.pickUp();
 			
 			//Deal the card to Dealer
-			//System.out.println(dealer.getNumCards());
 			if(dealer.getNumCards() != 2) {
 				dealer.addToHand(card1);
-				board.addToDealerHand(card1);
+				board.displayDealerHand(card1);
 				
 				cardsDealt = false;
 			} else {
@@ -66,17 +83,15 @@ public class BoardController {
 			}
 			
 			//Deal the card to Player
-			//System.out.println(player.getNumCards());
 			if(player.getNumCards() != 2) {
 				player.addToHand(card2);
-				board.addToPlayerHand(card2);
+				board.displayPlayerHand(card2);
 				
 				cardsDealt = false;
 			} else {
 				cardsDealt = true;
 			}
 			
-			//System.out.println("Hello");
 			
 		} while(!cardsDealt);
 		
