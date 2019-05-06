@@ -3,50 +3,56 @@ package com.z41n.blackjack.items;
 import java.util.LinkedList;
 import java.util.Random;
 
+/*
+ * Deck Class
+ * 
+ * Stack of card nodes
+ * Card data
+ */
 public class Deck {
 
 	private Card top;
 	private int size;
-	private String [] cardValues;
-	private String [] cardTypes;
+	private String [] values;
+	private String [] suits;
 
 	public Deck() {
 		size = 0;
-		cardValues = new String[13];
-		cardTypes = new String[4];
+		values = new String[13];
+		suits = new String[4];
 		
 		
-		for(int i = 0; i < cardValues.length; i++) {
+		for(int i = 0; i < values.length; i++) {
 			if(i == 0) {
-				cardValues[i] = "A";
+				values[i] = "A";
 			}
 			else if(i == 10) {
-				cardValues[i] = "J";
+				values[i] = "J";
 			}
 			else if (i == 11) {
-				cardValues[i] = "Q";
+				values[i] = "Q";
 			}
 			else if(i == 12) {
-				cardValues[i] = "K";
+				values[i] = "K";
 			}
 			else {
-				cardValues[i] = String.valueOf(i + 1);
+				values[i] = String.valueOf(i + 1);
 			}
 		}
 		
-		cardTypes[0] = "Spades";
-		cardTypes[1] = "Hearts";
-		cardTypes[2] = "Clubs";
-		cardTypes[3] = "Diamonds";
+		suits[0] = "Spades";
+		suits[1] = "Hearts";
+		suits[2] = "Clubs";
+		suits[3] = "Diamonds";
 	}
 	
 	
 	//Shuffle the order of the deck.
 	public void shuffle() {
 		LinkedList<Card> deck = new LinkedList<Card>();
-		for(int i = 0; i < cardTypes.length; i++) { 
-			for(int j = 0; j < cardValues.length; j++) {
-				deck.add(new Card(cardValues[j], cardTypes[i]));
+		for(int i = 0; i < suits.length; i++) { 
+			for(int j = 0; j < values.length; j++) {
+				deck.add(new Card(values[j], suits[i]));
 			}
 		}
 		
@@ -96,12 +102,12 @@ public class Deck {
 	public static class Card {
 		
 		public String value;
-		public String type;
+		public String suit;
 		private Card next;
 		
-		public Card(String value, String type) {
+		public Card(String value, String suit) {
 			this.value = value;
-			this.type = type;
+			this.suit = suit;
 		}
 	}
 	

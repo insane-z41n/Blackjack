@@ -13,7 +13,7 @@ public class Game {
 //		deck.shuffle();
 //		
 //		Card card = deck.pickUp();
-//		System.out.println(card.value + " of " + card.type);
+//		System.out.println(card.value + " of " + card.suit);
 //		
 //		PlayerHand player1 = new PlayerHand("Player 1");
 //		player1.addToHand(card);

@@ -19,11 +19,11 @@ import com.z41n.blackjack.items.Deck.Card;
 public class Board extends JFrame{
 	
 	private int width, height;
-	private int dealerIndex = 0, playerIndex = 0;
+	public int dealerIndex = 0, playerIndex = 0;
 	
-	private JPanel dealerCardsPanel, playerCardsPanel;
+	public JPanel dealerCardsPanel, playerCardsPanel;
 	
-	public JButton dealButton, hitButton, standButton;
+	public JButton newGameButton, dealButton, hitButton, standButton;
 	
 	private LinkedList<JLabel> dealerCards = new LinkedList<JLabel>();
 	private LinkedList<JLabel> playerCards = new LinkedList<JLabel>();
@@ -39,6 +39,14 @@ public class Board extends JFrame{
 		setPreferredSize(new Dimension(width, height));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
+		
+		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new FlowLayout(FlowLayout.LEADING));
+		add(topPanel, BorderLayout.NORTH);
+		
+		newGameButton = new JButton("New Game");
+		newGameButton.setFocusPainted(false);
+		topPanel.add(newGameButton);
 		
 		//contains all the components on the board.
 		JPanel tablePanel = new JPanel();
@@ -80,20 +88,15 @@ public class Board extends JFrame{
 		standButton = new JButton("Stand");
 		standButton.setFocusPainted(false);
 		buttonPanel.add(standButton);
-		
-//		newButton = new JButton("New Game");
-//		newButton.setFocusPainted(false);
-//		newButton.setVisible(false);
-		
+
 		new BoardController(this);
-		
 		
 		setVisible(true);
 		pack();
 		setLocationRelativeTo(null);
 	}
 	
-	//Display cards from player hand.
+	//Display cards from player hand after adding new card to player cards label list.
 	public void displayPlayerHand(Card newCard) {
 		JLabel card = createCardLabel(newCard);
 		playerCards.add(card);
@@ -107,14 +110,14 @@ public class Board extends JFrame{
 		
 	}
 	
-	//Display cards from dealers hand.
+	//Display cards from dealers hand after adding new card to player cards label list.
 	public void displayDealerHand(Card newCard) {
 		JLabel card = createCardLabel(newCard);
 		dealerCards.add(card);
 		
 		if(dealerCards.size() == 1) {
 			JLabel blankLabel = new JLabel("FLIPPED");
-			createCardLabel(blankLabel);
+			designCard(blankLabel);
 			dealerCardsPanel.add(blankLabel);
 		} else {
 			dealerCardsPanel.add(dealerCards.get(dealerIndex));
@@ -126,17 +129,31 @@ public class Board extends JFrame{
 		dealerCardsPanel.repaint();
 	}
 	
-	//Create Card Label with Card as paramater.
+	//Create Card Label with Card as parameter.
 	private JLabel createCardLabel(Card newCard) {
 		//System.out.println(newCard.value + " of " + newCard.type);
-		JLabel card = new JLabel(newCard.value + " of " + newCard.type);
-		createCardLabel(card);
+		JLabel card = new JLabel(newCard.value + " of " + newCard.suit);
+		designCard(card);
 		return card;
 	}
 	
-	//Create Card Label 
-	private void createCardLabel(JLabel lbl) {
+	//Design Card Label 
+	private void designCard(JLabel lbl) {
 		lbl.setForeground(Color.RED);
+	}
+	
+	//Remove Dealer Cards Label
+	public void removeDealerCardsLabel() {
+		while(!dealerCards.isEmpty()) {
+			dealerCards.removeFirst();
+		}
+	}
+	
+	//Remove Player Cards Label
+	public void removePlayerCardsLabel() {
+		while(!playerCards.isEmpty()) {
+			playerCards.removeFirst();
+		}
 	}
 	
 	
