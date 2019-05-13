@@ -37,7 +37,56 @@ public class BoardController {
 		board.newGameButton.addActionListener(a -> startNewGame());
 		board.dealButton.addActionListener(a -> dealCards());
 		board.hitButton.addActionListener(a -> hitPlayerHand());
-		//board.standButton.addActionListener(a -> stand());
+		board.standButton.addActionListener(a -> stand());
+	}
+	
+	//Player Stands and waits for dealer to win or lose against them.
+	private void stand() {
+		board.hitButton.setEnabled(false);
+		board.standButton.setEnabled(false);
+		
+		int playerTotal = player.getTotal();
+		int dealerTotal = dealer.getTotal();
+		
+		int numPlayerCards = player.getNumCards();
+		int numDealerCards = dealer.getNumCards();
+		
+		board.gameInfoLabel.setText("Your total is " + playerTotal);
+		board.flippedLabel.setText(board.dealerCards.get(0).getText());
+		
+		while(dealerTotal < 21) {
+			
+			if(dealerTotal > 17 && playerTotal < dealerTotal) {
+				break;
+			} else {
+				Card newCard = deck.pickUp();
+				dealer.addToHand(newCard);
+				board.displayDealerHand(newCard);
+				
+				dealerTotal = dealer.getTotal();
+			}
+		}
+		if(dealerTotal > 21) {
+			board.gameInfoLabel.setText("Player Wins! Dealer Bust!");
+		} else if(dealerTotal == playerTotal) {
+			//Dealer wins
+			if(numPlayerCards > numDealerCards) {
+				board.gameInfoLabel.setText("Dealer Wins!");
+			}
+			//Player wins
+			else {
+				board.gameInfoLabel.setText("Player Wins!");
+			}
+		} else if (playerTotal > dealerTotal) {
+			board.gameInfoLabel.setText("Player Wins!" + playerTotal + " vs " + dealerTotal);
+		} else {
+			board.gameInfoLabel.setText("Dealer Wins!" + playerTotal + " vs " + dealerTotal);
+		}
+		
+		
+		
+		
+		
 	}
 	
 	//Add card to player hand and check if they have not exceeded 21.
@@ -55,17 +104,23 @@ public class BoardController {
 		if(!bust) {
 			
 			if(total == 21) {
-				System.out.println("You have 21! You win!");
+				board.gameInfoLabel.setText("Your Total is 21");
+				board.hitButton.setEnabled(false);
+				board.standButton.setEnabled(false);
 				
 			} else if(player.getNumCards() > 4) {
-				System.out.println("You win by the rule of Charlie");
+				board.gameInfoLabel.setText("You win by the rule of Charlie");
+				board.hitButton.setEnabled(false);
+				board.standButton.setEnabled(false);
 				
 			} else {
-				System.out.println("Your total = " + total + ".");
+				board.gameInfoLabel.setText("Your total = " + total + ".");
 			}
 			
 		} else {
-			System.out.println("You Lose");
+			board.gameInfoLabel.setText("You Lose! Total = " + total);
+			board.hitButton.setEnabled(false);
+			board.standButton.setEnabled(false);
 		}
 
 	}
@@ -83,6 +138,10 @@ public class BoardController {
 	
 	//Deals cards to the players and the dealer.
 	private void dealCards() {
+		
+		board.newGameButton.setEnabled(true);
+		board.standButton.setEnabled(true);
+		board.hitButton.setEnabled(true);
 		
 		boolean cardsDealt = false;
 		
@@ -128,18 +187,21 @@ public class BoardController {
 		int total = player.getTotal();
 		
 		if(total == 21) {
-			System.out.println("You have 21! You win!");
+			board.gameInfoLabel.setText("You have 21! You win!");
 			
 		} else if(player.getNumCards() > 4) {
-			System.out.println("You win by the rule of Charlie");
+			board.gameInfoLabel.setText("You win by the rule of Charlie");
 			
 		} else {
-			System.out.println("Your total = " + total + ".");
+			board.gameInfoLabel.setText("Your total = " + total + ".");
 		}
+		
+		board.dealButton.setEnabled(false);
 		
 	}
 	
 	
+	//Has an issue, program will freeze when pressed.
 	private void startNewGame() {
 		
 		if(!dealer.isHandEmpty() && !player.isHandEmpty()) {
@@ -161,6 +223,11 @@ public class BoardController {
 		
 			//Shuffle deck.
 			deck.shuffle();
+			
+			board.dealButton.setEnabled(true);
+			board.hitButton.setEnabled(true);
+			board.standButton.setEnabled(true);
+			board.gameInfoLabel.setText("Welcome to Blackjack!");
 		}
 	}
 	

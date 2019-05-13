@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import com.z41n.blackjack.controller.BoardController;
 import com.z41n.blackjack.items.Deck.Card;
@@ -23,10 +24,12 @@ public class Board extends JFrame{
 	
 	public JPanel dealerCardsPanel, playerCardsPanel;
 	
+	public JLabel gameInfoLabel, flippedLabel;
+	
 	public JButton newGameButton, dealButton, hitButton, standButton;
 	
-	private LinkedList<JLabel> dealerCards = new LinkedList<JLabel>();
-	private LinkedList<JLabel> playerCards = new LinkedList<JLabel>();
+	public LinkedList<JLabel> dealerCards = new LinkedList<JLabel>();
+	public LinkedList<JLabel> playerCards = new LinkedList<JLabel>();
 	
 	public Board(int width, int height) {
 		this.width = width;
@@ -46,11 +49,12 @@ public class Board extends JFrame{
 		
 		newGameButton = new JButton("New Game");
 		newGameButton.setFocusPainted(false);
+		newGameButton.setEnabled(false);
 		topPanel.add(newGameButton);
 		
 		//contains all the components on the board.
 		JPanel tablePanel = new JPanel();
-		tablePanel.setLayout(new GridLayout(2,0));
+		tablePanel.setLayout(new GridLayout(3,0));
 		add(tablePanel, BorderLayout.CENTER);
 
 		//Contains all the dealer card.
@@ -58,9 +62,20 @@ public class Board extends JFrame{
 		dealerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		tablePanel.add(dealerPanel);
 		
+		//Panel containing the 
 		dealerCardsPanel = new JPanel();
 		dealerCardsPanel.setLayout(new BoxLayout(dealerCardsPanel, BoxLayout.PAGE_AXIS));
 		dealerPanel.add(dealerCardsPanel);
+		
+		JPanel centerPanel = new JPanel();
+		centerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		tablePanel.add(centerPanel);
+		
+		gameInfoLabel = new JLabel("Welcome to BlackJack!");
+		gameInfoLabel.setForeground(Color.RED);
+		gameInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		centerPanel.add(gameInfoLabel);
+		
 		
 		//Contains all the player cards.
 		JPanel playerPanel = new JPanel();
@@ -83,10 +98,12 @@ public class Board extends JFrame{
 		
 		hitButton = new JButton("Hit");
 		hitButton.setFocusPainted(false);
+		hitButton.setEnabled(false);
 		buttonPanel.add(hitButton);
 		
 		standButton = new JButton("Stand");
 		standButton.setFocusPainted(false);
+		standButton.setEnabled(false);
 		buttonPanel.add(standButton);
 
 		new BoardController(this);
@@ -116,9 +133,9 @@ public class Board extends JFrame{
 		dealerCards.add(card);
 		
 		if(dealerCards.size() == 1) {
-			JLabel blankLabel = new JLabel("FLIPPED");
-			designCard(blankLabel);
-			dealerCardsPanel.add(blankLabel);
+			flippedLabel = new JLabel("FLIPPED");
+			designCard(flippedLabel);
+			dealerCardsPanel.add(flippedLabel);
 		} else {
 			dealerCardsPanel.add(dealerCards.get(dealerIndex));
 		}
@@ -128,6 +145,7 @@ public class Board extends JFrame{
 		dealerCardsPanel.revalidate();
 		dealerCardsPanel.repaint();
 	}
+	
 	
 	//Create Card Label with Card as parameter.
 	private JLabel createCardLabel(Card newCard) {
